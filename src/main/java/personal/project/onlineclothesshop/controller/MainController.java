@@ -12,4 +12,9 @@ public class MainController {
     public String home() {
         return "home";
     }
+
+    @GetMapping(path = {"/about"})
+    public String about() {
+        return "about";
+    }
 }
