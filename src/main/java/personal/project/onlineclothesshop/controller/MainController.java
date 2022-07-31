@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import personal.project.onlineclothesshop.product.Product;
-import personal.project.onlineclothesshop.product.ProductRepository;
+import personal.project.onlineclothesshop.product.ProductService;
 
-@RestController
+@Controller
 @RequestMapping
 public class MainController {
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
     @GetMapping(path = {"/", "/home"})
     public String home() {
-        return "home";
+        return "shop";
     }
 
-    @GetMapping(path = {"/about"})
-    public String about() {
-        Product product = productRepository.findAll().get(0);
-        return product.toString();
-    }
+//    @GetMapping(path = {"/about"})
+//    public String about() {
+//        Product product = productService.getAllProduct().get(0);
+//        return product.toString();
+//    }
 }
