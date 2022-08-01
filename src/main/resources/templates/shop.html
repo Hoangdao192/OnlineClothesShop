@@ -31,6 +31,7 @@
             </div>
         </div>
         <div class="searchBox">
+            <img src="images/search.svg" alt="">
             <p>Search</p>
         </div>
         <div class="user">
@@ -47,7 +48,9 @@
                     </div>
                 </div>
             </div>
-            <div class="user__setting"></div>
+            <div class="user__setting">
+                <img src="images/setting.svg" alt="">
+            </div>
         </div>
     </header>
     <div class="container">
@@ -60,6 +63,15 @@
         <div class="container__main">
             <div class="main__left">
                 <div class="filter">
+                    <div class="filterConfig">
+                        <div class="filterButton">
+                            <img src="images/filter.svg" alt="">
+                            <p>Filter</p>
+                        </div>
+                        <div class="clearFilter">
+                            <p>Clear</p>
+                        </div>
+                    </div>
                     <div class="sizeFilter">
                         <p class="filterTitle">Size</p>
                         <div class="sizeContainer">
@@ -82,23 +94,49 @@
                     </div>
                     <div class="priceFilter">
                         <p class="filterTitle">Price</p>
+                        <p class="priceRange">
+                            <span id="range1">0k</span>
+                             - 
+                            <span id="range2">5.000k</span>
+                        </p>
+                        <div class="wrapper rangeSlider">
+                            <div class="sliderContainer">
+                                <div class="slider-track"></div>
+                                <input type="range" min="0" max="5000" value="0" id="slider-1" oninput="slideOne()">
+                                <input type="range" min="0" max="5000" value="5000" id="slider-2" oninput="slideTwo()">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="main__right">
                 <div class="main__top">
                     <div class="categorySelector">
-                        <p>Category</p>
+                        <p>Category: </p>
+                        <select name="categorySelector" id="categorySelector">
+                            <option value="-1">All</option>
+                            <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
                     </div>
                     <div class="productTypeSelector">
-                        <p>Product type</p>
+                        <p>Product type: </p>
+                        <select name="productTypeSelector" id="productTypeSelector">
+                            <option value="-1">All</option>
+                            <option th:each="productType: ${productTypes}" th:value="${productType.id}" th:text="${productType.name}"></option>
+                        </select>
+                    </div>
+                    <div class="sortBy">
+                        <p>Sort by: </p>
+                        <select name="sortSelector" id="sortSelector">
+                            <option value="1">Name</option>
+                        </select>
                     </div>
                 </div>
                 <div class="main__content">
                     <div class="productContainer">
-                        <div class="productItem">
+                        <div th:each="product: ${products}" class="productItem">
                             <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
+                                <img th:src="'images/database/' + ${product.productImagePath}" alt="">
                                 <div class="favorite">
                                     <i class="fa-solid fa-heart"></i>
                                 </div>
@@ -109,170 +147,11 @@
                             </div>
                             <div class="productInformation">
                                 <div class="productPrice">
-                                    <p>240.000đ</p>
+                                    <p th:text="${product.productPrice}"></p>
                                 </div>
                                 <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="productItem">
-                            <div class="productImage">
-                                <img src="https://product.hstatic.net/200000260587/product/zve02401_1734156f83e041208f0e384758d809f0_master.png" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p>240.000đ</p>
-                                </div>
-                                <div class="productName">
-                                    <p>HardMode</p>
+                                    <p class="primaryName" th:text="${product.productName}">HardMode</p>
+                                    <p class="shortName">UT12536</p>
                                 </div>
                             </div>
                         </div>
@@ -282,4 +161,5 @@
         </div>
     </div>
 </body>
+<script src="js/shop.js"></script>
 </html>
