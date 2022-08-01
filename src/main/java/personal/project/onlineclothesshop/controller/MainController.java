@@ -30,7 +30,6 @@ public class MainController {
         List<Product> productList = productService.getAllProduct();
         List<Category> categories = categoryService.getAllCategory();
         List<ProductType> productTypes = productTypeService.getAllProductType();
-        model.addAttribute("products", productList);
         model.addAttribute("categories", categories);
         model.addAttribute("productTypes", productTypes);
         return "shop";

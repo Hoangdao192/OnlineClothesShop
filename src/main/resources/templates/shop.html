@@ -128,33 +128,15 @@
                     <div class="sortBy">
                         <p>Sort by: </p>
                         <select name="sortSelector" id="sortSelector">
-                            <option value="1">Name</option>
+                            <option value="1">A to Z</option>
+                            <option value="2">Z to A</option>
+                            <option value="3">Price low to high</option>
+                            <option value="4">Price high to low</option>
                         </select>
                     </div>
                 </div>
                 <div class="main__content">
                     <div class="productContainer">
-                        <div th:each="product: ${products}" class="productItem">
-                            <div class="productImage">
-                                <img th:src="'images/database/' + ${product.productImagePath}" alt="">
-                                <div class="favorite">
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="addToCart">
-                                    <p>Add to cart</p>
-                                    <!-- <i class="fa-solid fa-plus"></i> -->
-                                </div>
-                            </div>
-                            <div class="productInformation">
-                                <div class="productPrice">
-                                    <p th:text="${product.productPrice}"></p>
-                                </div>
-                                <div class="productName">
-                                    <p class="primaryName" th:text="${product.productName}">HardMode</p>
-                                    <p class="shortName">UT12536</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

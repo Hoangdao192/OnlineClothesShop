@@ -15,10 +15,16 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping(path = "/list", params = "categoryId")
-    public List<Product> getProductByCategoryId(@RequestParam long categoryId) {
-        return productService.g
+    public List<Product> getProductByCategoryId(@RequestParam(required = true) long categoryId) {
+        return productService.getProductByCategoryId(categoryId);
     }
 
+    @GetMapping(path = "/list", params = "productTypeId")
+    public List<Product> getProductByProductTypeId(@RequestParam(required = true) long productTypeId) {
+        return productService.getProductByProductTypeId(productTypeId);
+    }
+
+    @GetMapping(path = "/list")
     public List<Product> getAllProduct() {
         return productService.getAllProduct();
     }

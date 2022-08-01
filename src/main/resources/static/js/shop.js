@@ -32,7 +32,7 @@ function fillColor(){
     sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
 }
 
-function formatCurrency() {
+function formatProductItem() {
     let productItems = document.querySelectorAll(".productItem");
     console.log(productItems);
     for (let productItem of productItems) {
@@ -56,13 +56,107 @@ function formatCurrency() {
     }
 }
 
-formatCurrency();
-
-let request = new XMLHttpRequest();
-request.open("GET", "./api/home");
-request.onload = function () {
-    if (this.status >= 200 && this.status < 400) {
-        console.log(this.response);
+function loadProductType(callback) {
+    let categorySelector = document.querySelector(".categorySelector select");
+    let selectedCategoryId = categorySelector.value;
+    let productTypeSelector = document.querySelector(".productTypeSelector select");
+    productTypeSelector.innerHTML = "<option value='-1'>All</option>";
+    if (selectedCategoryId != -1) {
+        let request = new XMLHttpRequest();
+        request.open("GET", `./api/producttype/list?categoryId=${selectedCategoryId}`);
+        request.onload = function () {
+            if (this.status >= 200 && this.status < 400) {
+                let productTypeArray = JSON.parse(this.response);
+                for (let productType of productTypeArray) {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", productType.id);
+                    option.innerHTML = productType.name;
+                    productTypeSelector.appendChild(option);
+                }
+            }
+            if (callback) {
+                callback();
+            }
+        }
+        request.send();
+    } else {
+        if(callback) {
+            callback();
+        }
     }
 }
-request.send();
+
+function loadProduct() {
+    let categorySelector = document.querySelector(".categorySelector select");
+    let selectedCategoryId = categorySelector.value;
+    let productTypeSelector = document.querySelector(".productTypeSelector select");
+    let selectedProductTypeId = productTypeSelector.value;
+    let requestUrl = "";
+
+    if (selectedProductTypeId == -1) {
+        if (selectedCategoryId == -1) {
+            requestUrl = "./api/product/list";
+        } else {
+            requestUrl = "./api/product/list?categoryId=" + selectedCategoryId;
+        }
+    } else {
+        requestUrl = "./api/product/list?productTypeId=" + selectedProductTypeId;
+    }
+
+    let request = new XMLHttpRequest();
+    request.open("GET", requestUrl);
+    request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+            parseProductArray(JSON.parse(this.response));
+            formatProductItem();
+        }
+    }
+    request.send();
+}
+
+function parseProductArray(productArray) {
+    let productContainer = document.querySelector(".productContainer");
+    productContainer.innerHTML = "";
+    for (let product of productArray) {
+        let productItem = document.createElement("div");
+        productItem.classList.add("productItem");
+        productItem.innerHTML =
+            `<div class="productImage">
+                <img src="images/database/${product.productImagePath}" alt="">
+                <div class="favorite">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="addToCart">
+                    <p>Add to cart</p>
+                    <!-- <i class="fa-solid fa-plus"></i> -->
+                </div>
+            </div>
+            <div class="productInformation">
+                <div class="productPrice">
+                    <p>${product.productPrice}</p>
+                </div>
+                <div class="productName">
+                    <p class="primaryName">${product.productName}</p>
+                    <p class="shortName">UT12536</p>
+                </div>
+            </div>`;
+        productContainer.appendChild(productItem);
+    }
+
+}
+
+loadProductType(() => {
+    loadProduct();
+});
+
+let categorySelector = document.querySelector(".categorySelector select");
+categorySelector.addEventListener('change', () => {
+    loadProductType(() => {
+        loadProduct();
+    });
+})
+let productTypeSelector = document.querySelector(".productTypeSelector select");
+productTypeSelector.addEventListener('change', () => {
+    loadProduct();
+})
+
