@@ -34,7 +34,6 @@ function fillColor(){
 
 function formatProductItem() {
     let productItems = document.querySelectorAll(".productItem");
-    console.log(productItems);
     for (let productItem of productItems) {
         let productPriceP = productItem.querySelector(".productPrice p");
         let productPriceFormatted = numberFormat.format(parseInt(productPriceP.innerHTML));
@@ -44,7 +43,6 @@ function formatProductItem() {
         let productShortNameP = productItem.querySelector(".shortName");
         let productName = productNameP.innerHTML;
         let wordArray = productName.split(" ");
-        console.log(wordArray);
         if (wordArray.length >= 2) {
             productNameP.innerHTML = wordArray[0] + " " + wordArray[1];
             let productShortName = "";
@@ -91,7 +89,12 @@ function loadProduct() {
     let selectedCategoryId = categorySelector.value;
     let productTypeSelector = document.querySelector(".productTypeSelector select");
     let selectedProductTypeId = productTypeSelector.value;
+    let sortBySelector = document.querySelector(".sortBy select");
+    let selectedSortBy = sortBySelector.value;
+    console.log(selectedSortBy);
+    console.log(typeof selectedSortBy)
     let requestUrl = "";
+    selectedSortBy = parseInt(selectedSortBy);
 
     if (selectedProductTypeId == -1) {
         if (selectedCategoryId == -1) {
@@ -103,7 +106,20 @@ function loadProduct() {
         requestUrl = "./api/product/list?productTypeId=" + selectedProductTypeId;
     }
 
+    if (requestUrl.indexOf("?") == -1) {
+        requestUrl += "?"
+    } else {
+        requestUrl += "&"
+    }
+    switch (selectedSortBy) {
+        case 1: requestUrl += "orderBy=name&order=asc"; break;
+        case 2: requestUrl += "orderBy=name&order=des"; break;
+        case 3: requestUrl += "orderBy=price&order=asc"; break;
+        case 4: requestUrl += "orderBy=price&order=des"; break;
+    }
+
     let request = new XMLHttpRequest();
+    console.log(requestUrl);
     request.open("GET", requestUrl);
     request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
@@ -157,6 +173,10 @@ categorySelector.addEventListener('change', () => {
 })
 let productTypeSelector = document.querySelector(".productTypeSelector select");
 productTypeSelector.addEventListener('change', () => {
+    loadProduct();
+})
+let sortBySelector = document.querySelector(".sortBy select");
+sortBySelector.addEventListener('change', () => {
     loadProduct();
 })
 

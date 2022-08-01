@@ -15,12 +15,68 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping(path = "/list", params = "categoryId")
-    public List<Product> getProductByCategoryId(@RequestParam(required = true) long categoryId) {
+    public List<Product> getProductByCategoryId(
+            @RequestParam(required = true) long categoryId,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String order
+    ) {
+        if (orderBy != null) {
+            String sortBy = "";
+            switch (orderBy) {
+                case "name": sortBy = "productName"; break;
+                case "price": sortBy = "productPrice"; break;
+            }
+            if (sortBy.compareTo("") != 0) {
+                System.out.println(order);
+                if (order != null && order.compareTo("des") == 0) {
+                    System.out.println("call des");
+                    return productService
+                            .getProductByCategoryIdOrdered(
+                                    categoryId,
+                                    sortBy,
+                                    order);
+                } else {
+                    return productService
+                            .getProductByCategoryIdOrdered(
+                                    categoryId,
+                                    sortBy,
+                                    "asc");
+                }
+            }
+        }
         return productService.getProductByCategoryId(categoryId);
     }
 
     @GetMapping(path = "/list", params = "productTypeId")
-    public List<Product> getProductByProductTypeId(@RequestParam(required = true) long productTypeId) {
+    public List<Product> getProductByProductTypeId(
+            @RequestParam(required = true) long productTypeId,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String order
+    ) {
+        if (orderBy != null) {
+            String sortBy = "";
+            switch (orderBy) {
+                case "name": sortBy = "productName"; break;
+                case "price": sortBy = "productPrice"; break;
+            }
+            if (sortBy.compareTo("") != 0) {
+                System.out.println(order);
+                if (order != null && order.compareTo("des") == 0) {
+                    System.out.println("call des");
+                    return productService
+                            .getProductByProductTypeIdOrdered(
+                                    productTypeId,
+                                    sortBy,
+                                    order);
+                } else {
+                    return productService
+                            .getProductByProductTypeIdOrdered(
+                                    productTypeId,
+                                    sortBy,
+                                    "asc");
+                }
+            }
+        }
         return productService.getProductByProductTypeId(productTypeId);
     }
 
