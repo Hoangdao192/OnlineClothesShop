@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/product")
 public class ProductController {
-    @Autowired
+
     ProductService productService;
 
     @GetMapping(path = "/list", params = "categoryId")
@@ -81,7 +81,46 @@ public class ProductController {
     }
 
     @GetMapping(path = "/list")
-    public List<Product> getAllProduct() {
+    public List<Product> getAllProduct(
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String order
+    ) {
+        if (orderBy != null) {
+            String sortBy = "";
+            switch (orderBy) {
+                case "name": sortBy = "productName"; break;
+                case "price": sortBy = "productPrice"; break;
+            }
+            if (sortBy.compareTo("") != 0) {
+                System.out.println(order);
+                if (order != null && order.compareTo("des") == 0) {
+                    System.out.println("call des");
+                    return productService
+                            .getAllProductOrdered(
+                                    sortBy,
+                                    order);
+                } else {
+                    return productService
+                            .getAllProductOrdered(
+                                    sortBy,
+                                    "asc");
+                }
+            }
+        }
         return productService.getAllProduct();
+    }
+
+    @GetMapping(path = "/test")
+    public List<Product> getAllProductTest() {
+        return productService.getAllProduct(1, 8).toList();
+    }
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 }

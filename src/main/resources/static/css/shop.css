@@ -461,6 +461,69 @@ header .menu {
     font-weight: 500;
 }
 
+
+.main__bottom {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 4rem;
+}
+
+.pageHeading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #e3cc6e;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+
+}
+
+.pageHeading:hover {
+    color: white;
+    background-color: #e30c60;
+}
+
+.lastPage {
+    margin-left: 1.5rem;
+}
+
+.pageInfo {
+    margin-left: 0.5rem;
+    font-weight: bold;
+}
+
+.pageNumberContainer {
+    display: flex;
+}
+
+.pageNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    margin-left: 1rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pageNumber.active {
+    color: white;
+    background-color: #e3cc6e;
+}
+
+.pageNumber:hover {
+    color: white;
+    background-color: #e3cc6e;
+}
+
 /*Range slider*/
 
 .wrapper{
