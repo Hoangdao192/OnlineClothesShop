@@ -10,11 +10,5 @@ import personal.project.onlineclothesshop.producttype.ProductTypeService;
 public class App {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(App.class, args);
-
-        CategoryService categoryService = context.getBean(CategoryService.class);
-        System.out.println(categoryService.getAllCategory().get(0).toString());
-
-        ProductTypeService productTypeService = context.getBean(ProductTypeService.class);
-        System.out.println(productTypeService.getAllProductType().get(0));
     }
 }

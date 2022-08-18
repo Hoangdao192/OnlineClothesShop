@@ -87,12 +87,21 @@ function loadProductType(callback) {
 function loadProduct() {
     let categorySelector = document.querySelector(".categorySelector select");
     let selectedCategoryId = categorySelector.value;
+
     let productTypeSelector = document.querySelector(".productTypeSelector select");
     let selectedProductTypeId = productTypeSelector.value;
+
     let sortBySelector = document.querySelector(".sortBy select");
     let selectedSortBy = sortBySelector.value;
-    console.log(selectedSortBy);
-    console.log(typeof selectedSortBy)
+
+    let pageNumberContainer = document.querySelector(".pageNumberContainer");
+    let pageNumberActive = pageNumberContainer.querySelector(".pageNumber.active");
+    let selectedPageNumber = 1;
+    if (pageNumberActive != null) {
+        selectedPageNumber = pageNumberActive.querySelector("p").innerHTML;
+    }
+    selectedPageNumber = parseInt(selectedPageNumber);
+
     let requestUrl = "";
     selectedSortBy = parseInt(selectedSortBy);
 
@@ -117,17 +126,49 @@ function loadProduct() {
         case 3: requestUrl += "orderBy=price&order=asc"; break;
         case 4: requestUrl += "orderBy=price&order=des"; break;
     }
+    requestUrl += `&page=${selectedPageNumber - 1}`;
+
+    let loader = document.createElement("div");
+    loader.innerHTML = "<div class=\"lds-ellipsis\"><div></div><div></div><div></div><div></div></div>";
+    loader.classList.add("loader");
+    document.querySelector("body").appendChild(loader);
 
     let request = new XMLHttpRequest();
-    console.log(requestUrl);
     request.open("GET", requestUrl);
     request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
-            parseProductArray(JSON.parse(this.response));
+            if (document.querySelector("body .loader")) {
+                document.querySelector("body").removeChild(loader);
+            }
+            let result = JSON.parse(this.response);
+            parseProductArray(result.products);
+            loadPageNumber(result.page, result.numberOfPage);
             formatProductItem();
         }
     }
     request.send();
+}
+
+function loadPageNumber(currentPage, numberOfPage) {
+    //  Because the api count page from 0
+    currentPage++;
+    let pageNumberContainer = document.querySelector(".pageNumberContainer");
+    pageNumberContainer.innerHTML = "";
+    for (let i = 1; i <= numberOfPage; ++i) {
+        let pageNumberItem = document.createElement("div");
+        pageNumberItem.classList.add("pageNumber");
+        if (i == currentPage) {
+            pageNumberItem.classList.add("active");
+        }
+        pageNumberItem.innerHTML = `<p>${i}</p>`;
+        pageNumberItem.addEventListener("click", () => {
+            pageNumberContainer.querySelector(".pageNumber.active").classList.remove("active");
+            pageNumberItem.classList.add("active");
+            loadProduct();
+        })
+
+        pageNumberContainer.appendChild(pageNumberItem);
+    }
 }
 
 function parseProductArray(productArray) {
@@ -171,10 +212,12 @@ categorySelector.addEventListener('change', () => {
         loadProduct();
     });
 })
+
 let productTypeSelector = document.querySelector(".productTypeSelector select");
 productTypeSelector.addEventListener('change', () => {
     loadProduct();
 })
+
 let sortBySelector = document.querySelector(".sortBy select");
 sortBySelector.addEventListener('change', () => {
     loadProduct();
