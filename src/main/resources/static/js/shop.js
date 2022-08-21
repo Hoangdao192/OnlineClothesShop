@@ -154,7 +154,21 @@ function loadPageNumber(currentPage, numberOfPage) {
     currentPage++;
     let pageNumberContainer = document.querySelector(".pageNumberContainer");
     pageNumberContainer.innerHTML = "";
-    for (let i = 1; i <= numberOfPage; ++i) {
+
+    let minPageNumber = 1;
+    let maxPageNumber = numberOfPage;
+    if (currentPage > 1) {
+        minPageNumber = currentPage - 1;
+    }
+    maxPageNumber = minPageNumber + 4;
+    if (maxPageNumber > numberOfPage) {
+        maxPageNumber = numberOfPage;
+    }
+    while (maxPageNumber - minPageNumber < 4 && minPageNumber > 1) {
+        --minPageNumber;
+    }
+
+    for (let i = minPageNumber; i <= maxPageNumber; ++i) {
         let pageNumberItem = document.createElement("div");
         pageNumberItem.classList.add("pageNumber");
         if (i == currentPage) {
@@ -169,6 +183,19 @@ function loadPageNumber(currentPage, numberOfPage) {
 
         pageNumberContainer.appendChild(pageNumberItem);
     }
+
+    let firstPageNavigator = document.querySelector(".firstPage");
+    firstPageNavigator.setAttribute("value", "1");
+    let lastPageNavigator = document.querySelector(".lastPage");
+    lastPageNavigator.setAttribute("value", numberOfPage.toString());
+
+    let pageInfo = document.querySelector(".pageHeading.pageInfo");
+    pageInfo.querySelector("p").innerHTML = currentPage + "/" + numberOfPage;
+}
+
+function clearActivePage() {
+    let activePageNumber = document.querySelector(".pageNumberContainer .pageNumber.active");
+    activePageNumber.classList.remove("active");
 }
 
 function parseProductArray(productArray) {
@@ -208,6 +235,7 @@ loadProductType(() => {
 
 let categorySelector = document.querySelector(".categorySelector select");
 categorySelector.addEventListener('change', () => {
+    clearActivePage();
     loadProductType(() => {
         loadProduct();
     });
@@ -215,11 +243,28 @@ categorySelector.addEventListener('change', () => {
 
 let productTypeSelector = document.querySelector(".productTypeSelector select");
 productTypeSelector.addEventListener('change', () => {
+    clearActivePage();
     loadProduct();
 })
 
 let sortBySelector = document.querySelector(".sortBy select");
 sortBySelector.addEventListener('change', () => {
+    loadProduct();
+})
+
+let firstPageNavigator = document.querySelector(".firstPage");
+firstPageNavigator.addEventListener('click', () => {
+    let pageNumberContainer = document.querySelector(".pageNumberContainer");
+    let pageNumberActive = pageNumberContainer.querySelector(".pageNumber.active");
+    pageNumberActive.querySelector("p").innerHTML = firstPageNavigator.getAttribute("value");
+    loadProduct();
+})
+
+let lastPageNavigator = document.querySelector(".lastPage");
+lastPageNavigator.addEventListener('click', () => {
+    let pageNumberContainer = document.querySelector(".pageNumberContainer");
+    let pageNumberActive = pageNumberContainer.querySelector(".pageNumber.active");
+    pageNumberActive.querySelector("p").innerHTML = lastPageNavigator.getAttribute("value");
     loadProduct();
 })
 

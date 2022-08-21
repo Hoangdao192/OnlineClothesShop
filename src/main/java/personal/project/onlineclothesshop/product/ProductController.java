@@ -33,7 +33,7 @@ public class ProductController {
     public Map<String, Object> getProductByCategoryId(
             @RequestParam(required = true) long categoryId,
             @RequestParam(required = false) String orderBy,
-            @RequestParam(required = false) String order,
+            @RequestParam(required = false, defaultValue = "asc") String order,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "9") int perPage
     ) {
@@ -44,19 +44,13 @@ public class ProductController {
                 case "name": sortBy = "productName"; break;
                 case "price": sortBy = "productPrice"; break;
             }
-            if (sortBy.compareTo("") != 0) {
-                if (order != null && order.compareTo("des") == 0) {
+            if (!sortBy.equals("")) {
+                if (order != null && (order.equals("des") || order.equals("asc"))) {
                     productPage = productService
                             .getProductByCategoryIdOrdered(
                                     categoryId,
                                     sortBy,
                                     order, page, perPage);
-                } else {
-                    productPage = productService
-                            .getProductByCategoryIdOrdered(
-                                    categoryId,
-                                    sortBy,
-                                    "asc", page, perPage);
                 }
             }
         } else {
@@ -71,12 +65,28 @@ public class ProductController {
         return result;
     }
 
+    /**
+     * <i>/api/list?productTypedId=?</i>
+     * <p>This method's return value will be automated convert to JSON by Spring</p>
+     *
+     *  @return
+     *  <br>JSON: {
+     *          <br>"page": current page,
+     *          <br>"numberOfPage": int,
+     *          <br>"products": [
+     *              array of products
+     *          ]
+     *     <br>}
+     */
     @GetMapping(path = "/list", params = "productTypeId")
-    public List<Product> getProductByProductTypeId(
+    public Map<String, Object> getProductByProductTypeId(
             @RequestParam(required = true) long productTypeId,
             @RequestParam(required = false) String orderBy,
-            @RequestParam(required = false) String order
+            @RequestParam(required = false, defaultValue = "asc") String order,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "9") int perPage
     ) {
+        Page<Product> productPage = null;
         if (orderBy != null) {
             String sortBy = "";
             switch (orderBy) {
@@ -84,31 +94,34 @@ public class ProductController {
                 case "price": sortBy = "productPrice"; break;
             }
             if (sortBy.compareTo("") != 0) {
-                System.out.println(order);
-                if (order != null && order.compareTo("des") == 0) {
-                    System.out.println("call des");
-                    return productService
+                if (order != null && (order.equals("asc") || order.equals("des"))) {
+                    productPage = productService
                             .getProductByProductTypeIdOrdered(
                                     productTypeId,
                                     sortBy,
-                                    order);
-                } else {
-                    return productService
-                            .getProductByProductTypeIdOrdered(
-                                    productTypeId,
-                                    sortBy,
-                                    "asc");
+                                    order, page, perPage);
                 }
             }
+        } else {
+            productPage = productService.getProductByProductTypeId(productTypeId, page, perPage);
         }
-        return productService.getProductByProductTypeId(productTypeId);
+
+        //  Mapping data for JSON
+        Map<String, Object> result = new HashMap<>();
+        result.put("products", productPage.stream().toList());
+        result.put("page", productPage.getPageable().getPageNumber());
+        result.put("numberOfPage", productPage.getTotalPages());
+        return result;
     }
 
     @GetMapping(path = "/list")
-    public List<Product> getAllProduct(
+    public Map<String, Object> getAllProduct(
             @RequestParam(required = false) String orderBy,
-            @RequestParam(required = false) String order
+            @RequestParam(required = false, defaultValue = "asc") String order,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "9") int perPage
     ) {
+        Page<Product> productPage = null;
         if (orderBy != null) {
             String sortBy = "";
             switch (orderBy) {
@@ -116,27 +129,20 @@ public class ProductController {
                 case "price": sortBy = "productPrice"; break;
             }
             if (sortBy.compareTo("") != 0) {
-                System.out.println(order);
-                if (order != null && order.compareTo("des") == 0) {
-                    System.out.println("call des");
-                    return productService
-                            .getAllProductOrdered(
-                                    sortBy,
-                                    order);
-                } else {
-                    return productService
-                            .getAllProductOrdered(
-                                    sortBy,
-                                    "asc");
+                if (order != null && (order.equals("des") || order.equals("asc"))) {
+                    productPage = productService.getAllProductOrdered(sortBy, order, page, perPage);
                 }
             }
+        } else {
+            productPage = productService.getAllProduct(page, perPage);
         }
-        return productService.getAllProduct();
-    }
 
-    @GetMapping(path = "/test")
-    public List<Product> getAllProductTest() {
-        return productService.getAllProduct(1, 8).toList();
+        //  Mapping data for JSON
+        Map<String, Object> result = new HashMap<>();
+        result.put("products", productPage.stream().toList());
+        result.put("page", productPage.getPageable().getPageNumber());
+        result.put("numberOfPage", productPage.getTotalPages());
+        return result;
     }
 
     public ProductService getProductService() {
