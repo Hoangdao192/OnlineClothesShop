@@ -26,13 +26,14 @@ input[type="range"]{
     pointer-events: none;
 }
 
-.slider-track{
+.sliderTrack{
     width: 98%;
     left: 1%;
     height: 3px;
     position: absolute;
     bottom: 50%;
     transform: translateY(-50%);
+    background-color: #6b3ec7;
     border-radius: 5px;
 }
 input[type="range"]::-webkit-slider-runnable-track{
