@@ -1,0 +1,111 @@
+header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+}
+
+header .logo img {
+    height: 2rem;
+}
+
+header .menu {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    color: black;
+}
+
+.menu a {
+    color: black;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    font-weight: bold;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user__account {
+    display: flex;
+    align-items: center;
+}
+
+.user__account p {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    font-size: 0.75rem;
+}
+
+.user__account__avatar {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: blueviolet;
+    margin-right: 0.5rem;
+}
+
+.user__account__avatar img {
+    width: inherit;
+    height: inherit;
+}
+
+.user__account__userName p {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.user__account__email p {
+    color: #d5d5d5;
+}
+
+.user__setting {
+    margin-left: 1rem;
+    background-color: #fafafa;
+    border-radius: 10px;
+}
+
+.user__setting img {
+    width: 1rem;
+    margin: 0.6rem;
+}
+
+.searchBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 12%;
+    padding: 0.65rem 0;
+    padding-left: 1rem;
+    background-color: #fafafa;
+    border-radius: 8px;
+}
+
+.searchBox p {
+    margin: 0;
+    color: #d7d6db;
+    border-radius: 10px;
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+.searchBox img {
+    width: 1rem;
+}
+
+.searchBox::after {
+    height: 100%;
+    position: absolute;
+    content: "";
+    width: 2px;
+    background-color: #fafafa;
+    right: -3rem;
+    border-radius: 10px;
+}

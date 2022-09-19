@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { publicRoutes, privateRoutes } from "./routes";
 import { DefaultLayout } from "./components/Layout";
+import SlideBar from "./components/CommonComponent/SlideBar";
 
 function App() {
+    // console.log(<SlideBar className="class1 class2 class3"/>)
   return (
     <BrowserRouter>
         <div className="App">

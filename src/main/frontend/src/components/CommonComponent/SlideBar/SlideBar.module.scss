@@ -81,12 +81,12 @@ input[type="range"]:active::-webkit-slider-thumb{
     border: 3px solid #3264fe;
 }
 
-.priceRange {
+.sliderRange {
     font-weight: 500;
     margin-left: 1rem;
     display: inline-block;
 }
 
-.priceFilter .filterTitle {
+.priceFilter .sliderTitle {
     display: inline-block;
 }

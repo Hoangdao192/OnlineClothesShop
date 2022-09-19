@@ -4,8 +4,20 @@ import React from "react";
 class SlideBar extends React.Component {
     constructor(props) {
         super(props);
-        this.maxValue = props.maxValue ? 10 : props.maxValue;
-        this.minValue = props.minValue ? 0 : props.minValue;
+
+        this.className = styles.priceFilter;
+        if (this.props.className) {
+            this.className += " " + this.props.className;
+        }
+
+        this.maxValue = 10;
+        this.minValue = 0;
+        if (this.props.minValue) {
+            this.minValue = this.props.minValue;
+        }
+        if (this.props.maxValue) {
+            this.maxValue = this.props.maxValue;
+        }
 
         this.slideOne = this.slideOne.bind(this);
         this.slideTwo = this.slideTwo.bind(this);
@@ -19,7 +31,7 @@ class SlideBar extends React.Component {
         this.minGap = 0;
 
         this.numberFormat = new Intl.NumberFormat('de-DE');
-        this.sliderMaxValue = 5000;
+        this.sliderMaxValue = this.maxValue;
     }
 
     slideOne(){
@@ -50,22 +62,24 @@ class SlideBar extends React.Component {
         this.displayValOne = this.displayValOneRef.current;
         this.displayValTwo = this.displayValTwoRef.current;
         this.sliderTrack = this.sliderTrackRef.current;
+        this.slideOne();
+        this.slideTwo();
     }
 
     render() {
         return (
-            <div className={styles.priceFilter}>
-                <p className={styles.filterTitle}>Price</p>
-                <p className={styles.priceRange}>
-                    <span ref={this.displayValOneRef} id={styles.range1}>0k</span>
+            <div className={this.className}>
+                <p className={styles.sliderTitle}>Price</p>
+                <p className={styles.sliderRange}>
+                    <span ref={this.displayValOneRef}>0k</span>
                     -
-                    <span ref={this.displayValTwoRef} id={styles.range2}>5.000k</span>
+                    <span ref={this.displayValTwoRef}>5.000k</span>
                 </p>
                 <div className={styles.wrapper}>
                     <div className={styles.sliderContainer}>
                         <div ref={this.sliderTrackRef} className={styles.sliderTrack}></div>
-                        <input ref={this.firstSliderRef} type="range" min="0" max="5000" defaultValue="0" id="firstSlider" onChange={this.slideOne}/>
-                        <input ref={this.secondSliderRef} type="range" min="0" max="5000" defaultValue="5000" id="secondSlider" onChange={this.slideTwo}/>
+                        <input ref={this.firstSliderRef} type="range" min={this.minValue.toString()} max={this.maxValue.toString()} defaultValue={this.minValue.toString()} onChange={this.slideOne}/>
+                        <input ref={this.secondSliderRef} type="range" min={this.minValue.toString()} max={this.maxValue.toString()} defaultValue={this.maxValue.toString()} onChange={this.slideTwo}/>
                     </div>
                 </div>
             </div>

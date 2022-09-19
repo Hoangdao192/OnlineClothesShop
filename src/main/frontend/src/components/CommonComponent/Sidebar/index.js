@@ -4,9 +4,17 @@ import SlideBar from "../SlideBar";
 import React from "react";
 
 class Sidebar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.className = styles.mainLeft;
+        if (this.props.className) {
+            this.className += " " + this.props.className;
+        }
+    }
+
     render() {
         return (
-            <div className={styles.mainLeft}>
+            <div className={this.className}>
                 <div className={styles.filter}>
                     <div className={styles.filterConfig}>
                         <div className={styles.filterButton}>
@@ -37,7 +45,7 @@ class Sidebar extends React.Component {
                             <div className={styles.colorItem}></div>
                         </div>
                     </div>
-                    <SlideBar/>
+                    <SlideBar minValue="0" maxValue="5000" className={styles.priceFilter}/>
                 </div>
             </div>
         );

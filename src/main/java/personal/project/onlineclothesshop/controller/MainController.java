@@ -18,15 +18,13 @@ import java.util.List;
 @Controller
 @RequestMapping
 public class MainController {
-    @Autowired
+
     ProductService productService;
-    @Autowired
     ProductTypeService productTypeService;
-    @Autowired
     CategoryService categoryService;
 
-    @GetMapping(path = {"/", "/home"})
-    public String home(Model model) {
+    @GetMapping(path = { "/shop"})
+    public String shop(Model model) {
         List<Product> productList = productService.getAllProduct();
         List<Category> categories = categoryService.getAllCategory();
         List<ProductType> productTypes = productTypeService.getAllProductType();
@@ -35,9 +33,23 @@ public class MainController {
         return "shop";
     }
 
-//    @GetMapping(path = {"/about"})
-//    public String about() {
-//        Product product = productService.getAllProduct().get(0);
-//        return product.toString();
-//    }
+    @GetMapping(path = {"/", "/home"})
+    public String home() {
+        return "home";
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @Autowired
+    public void setProductTypeService(ProductTypeService productTypeService) {
+        this.productTypeService = productTypeService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 }
