@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+<div class="container">
+    <h1>Signup</h1>
+    <form action="http://localhost:5000/register" method="post" class="signupForm">
+        <div class="inputContainer usernameInput">
+            <div class="expansionContainer">
+                <th:block th:if="${usernameError != null}">
+                    <div class="expansion error active">
+                        <img src="images/error.svg" alt="Error">
+                        <p class="message" th:text="${usernameError}"></p>
+                    </div>
+                </th:block>
+            </div>
+            <div class="inputField">
+                <input name="username" type="text" placeholder="Username">
+            </div>
+        </div>
+        <div class="inputContainer emailInput">
+            <th:block th:if="${emailError != null}">
+                <div class="expansion error active">
+                    <img src="images/error.svg" alt="Error">
+                    <p class="message" th:text="${emailError}"></p>
+                </div>
+            </th:block>
+            <div class="expansionContainer">
+                <th:block th:if="${emailError != null}">
+                    <div class="expansion error active">
+                        <img src="images/error.svg" alt="Error">
+                        <p class="message" th:text="${emailError}"></p>
+                    </div>
+                </th:block>
+            </div>
+            <div class="inputField">
+                <input name="email" type="email" placeholder="Email">
+            </div>
+        </div>
+        <div class="inputContainer passwordInput">
+            <div class="expansionContainer">
+            </div>
+            <div class="inputField">
+                <input name="password" type="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="inputContainer rePasswordInput">
+            <div class="expansionContainer">
+            </div>
+            <div class="inputField">
+                <input name="repassword" type="password" placeholder="Re-enter password">
+            </div>
+        </div>
+        <div class="agreeCondition">
+            <input required type="checkbox">
+            <p>I agree with the terms and conditions</p>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <p class="hadAccount">I already have an account</p>
+</div>
+</body>
+<script src="js/register.js"></script>
+</html>

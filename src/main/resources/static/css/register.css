@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    background-color: white;
+    display: inline-block;
+    width: fit-content;
+    padding: 2rem 5rem;
+    border-radius: 15px;
+    box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
+}
+
+.container h1 {
+    font-family: 'Poppins', sans-serif;
+}
+
+.signupForm {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.signupForm .agreeCondition {
+    display: flex;
+}
+
+.signupForm .agreeCondition p {
+    margin-left: 1rem;
+}
+
+button {
+    border: none;
+    border-radius: 7px;
+    background-color: #7cafff;
+    padding: 1rem 0;
+    color: white;
+}
+
+.inputContainer .expansion {
+    display: none;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.inputContainer .expansion img {
+    position: relative;
+    top: -1px;
+    width: 1rem;
+    margin-right: 0.5rem;
+}
+
+.inputContainer .expansion p {
+    padding: 0;
+    margin: 0;
+}
+
+.inputContainer .expansion.active {
+    display: flex;
+}
+
+.inputContainer .expansion:empty {
+    display: none;
+}
+
+.inputContainer .expansion.error {
+    color: red;
+}
+
+.inputContainer .expansion.alert {
+    color: #FFAC1C;
+}
+
+.inputField {
+    font-family: 'Poppins', sans-serif;
+    min-width: 20rem;
+    background-color: #f8f8f8;
+    border: none;
+    margin-bottom: 1rem;
+    height: fit-content;
+    border-radius: 7px;
+    padding: 0.5rem 1rem;
+    outline-color: #478af5;
+    font-weight: 500;
+}
+
+.inputField:focus-within {
+    outline-style: inset;
+    outline-offset: 2px;
+    outline-width: 2px;
+    outline-color: #2776f2;
+}
+
+.inputField input {
+    height: 2rem;
+    display: inline-block;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent !important;
+}
+
+.hadAccount {
+    text-align: center;
+    color: #2776f2;
+    cursor: pointer;
+}
+
+.hadAccount:hover {
+    text-decoration: underline;
+}
