@@ -10,7 +10,8 @@
 <body>
 <div class="container">
     <h1>Signup</h1>
-    <form action="http://localhost:5000/register" method="post" class="signupForm">
+    <form action="/register" method="post" class="signupForm">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <div class="inputContainer usernameInput">
             <div class="expansionContainer">
                 <th:block th:if="${usernameError != null}">
@@ -25,12 +26,6 @@
             </div>
         </div>
         <div class="inputContainer emailInput">
-            <th:block th:if="${emailError != null}">
-                <div class="expansion error active">
-                    <img src="images/error.svg" alt="Error">
-                    <p class="message" th:text="${emailError}"></p>
-                </div>
-            </th:block>
             <div class="expansionContainer">
                 <th:block th:if="${emailError != null}">
                     <div class="expansion error active">
@@ -63,8 +58,8 @@
         </div>
         <button type="submit">Register</button>
     </form>
-    <p class="hadAccount">I already have an account</p>
+    <a href="/login" class="hadAccount">I already have an account</a>
 </div>
 </body>
-<script src="js/register.js"></script>
+<script type="module" src="js/register.js"></script>
 </html>

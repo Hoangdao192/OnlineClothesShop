@@ -1,18 +1,13 @@
 import UserChecking from "./UserChecking.js";
 
-let signupForm = document.querySelector(".signupForm");
+let loginForm = document.querySelector(".loginForm");
 let usernameInput = document.querySelector(".usernameInput input");
 let passwordInput = document.querySelector(".passwordInput input");
-let rePasswordInput = document.querySelector(".rePasswordInput input");
-let emailInput = document.querySelector(".emailInput input");
 let usernameInputExpansion = document.querySelector(".usernameInput .expansionContainer");
 let passwordInputExpansion = document.querySelector(".passwordInput .expansionContainer");
-let rePasswordInputExpansion = document.querySelector(".rePasswordInput .expansionContainer");
-let emailInputExpansion = document.querySelector(".emailInput .expansionContainer");
-signupForm.onsubmit = (event) => {
+loginForm.onsubmit = (event) => {
     event.preventDefault();
     usernameInputExpansion.innerHTML = "";
-    rePasswordInputExpansion.innerHTML = "";
     passwordInputExpansion.innerHTML = "";
     let valid = true;
     if (!UserChecking.isUsernameValid(usernameInput.value)) {
@@ -21,14 +16,6 @@ signupForm.onsubmit = (event) => {
             `<div class="expansion error active">
                 <img src="images/error.svg" alt="Error">
                 <p class="message">Username is not valid</p>
-            </div>`
-    }
-    if (!UserChecking.isEmailValid(emailInput.value)) {
-        valid = false;
-        emailInputExpansion.innerHTML =
-            `<div class="expansion error active">
-                <img src="images/error.svg" alt="Error">
-                <p class="message">Email is not valid</p>
             </div>`
     }
 
@@ -41,15 +28,7 @@ signupForm.onsubmit = (event) => {
             </div>`
     }
 
-    if (!UserChecking.isPasswordMatch(passwordInput.value, rePasswordInput.value)) {
-        valid = false;
-        rePasswordInputExpansion.innerHTML =
-            `<div class="expansion error active">
-                <img src="images/error.svg" alt="Error">
-                <p class="message">Password is not match.</p>
-            </div>`
-    }
     if (valid) {
-        signupForm.submit();
+        loginForm.submit();
     }
 }

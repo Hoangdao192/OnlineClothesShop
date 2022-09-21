@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="container">
+    <h1>Login</h1>
+    <form action="/login" method="post" class="loginForm">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div class="inputContainer usernameInput">
+            <div class="expansionContainer">
+                <th:block th:if="${error != null}">
+                    <div class="expansion error active">
+                        <img src="images/error.svg" alt="Error">
+                        <p class="message" th:text="${error}"></p>
+                    </div>
+                </th:block>
+            </div>
+            <div class="inputField">
+                <input name="username" type="text" placeholder="Username">
+            </div>
+        </div>
+        <div class="inputContainer passwordInput">
+            <div class="expansionContainer">
+            </div>
+            <div class="inputField">
+                <input name="password" type="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="agreeCondition">
+            <input type="checkbox">
+            <p>Remember me</p>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    <p class="forgotPassword">Forgot Password ?</p>
+    <p class="hadAccount">Don't have any account ? </p><a href="/register"> Sign up</a>
+</div>
+</body>
+<script type="module" src="js/login.js"></script>
+</html>

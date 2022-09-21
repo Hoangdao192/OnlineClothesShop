@@ -126,16 +126,32 @@ button:hover {
     background-color: transparent !important;
 }
 
-.hadAccount {
-    width: 100%;
-    display: inline-block;
-    text-align: center;
+.forgotPassword, .hadAccount+a {
+    font-size: 0.9rem;
     color: #2776f2;
-    cursor: pointer;
-    margin-top: 1rem;
     text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
 }
 
-.hadAccount:hover {
+.forgotPassword {
+    margin-top: 1rem;
+}
+
+.forgotPassword:hover, .hadAccount+a:hover {
     text-decoration: underline;
+}
+
+.hadAccount {
+    font-size: 0.9rem;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    color: #2776f2;
+}
+
+.hadAccount+a {
+    color: #2776f2;
+    font-weight: bold;
 }
